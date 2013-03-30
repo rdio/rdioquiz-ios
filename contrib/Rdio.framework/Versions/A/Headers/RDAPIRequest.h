@@ -36,8 +36,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * A helper object implementing the <RDAPIRequestDelegate> protocol, used to direct 
- * the load and fail calls to specific selectors. 
+ * A helper object implementing the
+ * \ref RDAPIRequestDelegate-p "&lt;RDAPIRequestDelegate&gt;" protocol, used to
+ * direct the load and fail calls to specific selectors.
+ *
  * This class is useful if you want to make multiple requests from within 
  * a single object.
  *
@@ -68,7 +70,7 @@
  *
  * @param target The object to which the given selectors should be applied
  * @param load A selector like rdioRequest:didLoadData: to be called when load completes
- * @param load A selector like rdioRequest:didFailWithError: to be called when load completes
+ * @param fail A selector like rdioRequest:didFailWithError: to be called when load completes
  */
 + (id)delegateToTarget:(id)target loadedAction:(SEL)load failedAction:(SEL)fail;
 
@@ -96,7 +98,7 @@
 @class RD_OAToken;
 
 /**
- * A request to the Rdio Web Service API. See [Rdio callAPIMethod]
+ * A request to the Rdio Web Service API. See Rdio::callAPIMethod:withParameters:delegate:
  */
 @interface RDAPIRequest : NSObject {
   id<RDAPIRequestDelegate> delegate_;
@@ -107,8 +109,11 @@
   RD_OAToken *token_;
   int numRetries_;
 }
-// Coming soon:
-// - (void)cancel;
+
+/**
+ * Cancels the Rdio API request
+ */
+ - (void)cancel;
 
 /**
  * The parameter dictionary passed to the request. Includes a "method" value
