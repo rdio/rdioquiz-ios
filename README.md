@@ -1,4 +1,4 @@
-[Rdio Quiz](http://itunes.apple.com/us/app/music-quiz-for-rdio/id434015378) is a complete example of how to use the [Rdio iOS library](http://www.rdio.com/media/static/developer/ios/docs/) and [API](http://developer.rdio.com/docs/read/REST).
+[Rdio Quiz](https://github.com/rdio/rdioquiz-ios) is a complete example of how to use the [Rdio iOS library](http://www.rdio.com/media/static/developer/ios/docs/) and [API](http://developer.rdio.com/docs/read/REST).
 
 The goal of this project is to provide best practices of how to perform user authentication, music playback and perform API calls, as well as to give developers a general feel for what the library can do and how to integrate it into their applications.
 
