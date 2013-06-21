@@ -117,7 +117,11 @@
 
 /**
  * The parameter dictionary passed to the request. Includes a "method" value
- * indicating which web service API was called.
+ * indicating which web service API was called. Note that all keys and values
+ * in the `parameters` dictionary will be instances of NSString.
+ *
+ * For example, if you make an API call with the `count` parameter set to 20, `[parameters objectForKey:@"count"]`
+ * would return `@"20"`, not `@20`.
  */
 @property (nonatomic, readonly) NSDictionary *parameters;
 @end

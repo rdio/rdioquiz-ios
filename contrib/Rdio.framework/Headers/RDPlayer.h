@@ -23,7 +23,7 @@ typedef enum {
 /**
  * Player delegate
  */
-@protocol RDPlayerDelegate
+@protocol RDPlayerDelegate <NSObject>
 
 /**
  * Notification that the current user has started playing with Rdio from 
@@ -37,14 +37,24 @@ typedef enum {
  */
 -(void)rdioPlayerChangedFromState:(RDPlayerState)oldState toState:(RDPlayerState)newState;
 
+@optional
+
 /**
  * Notification that the play queue has been updated.
  *
  * For example, when new tracks are added using the queueSource and queueSources
  * methods.
  */
-@optional
 -(void)rdioPlayerQueueDidChange;
+
+/**
+ * Notification that the specified track did not successfully finish streaming.
+ *
+ * If this method is not implemented, we will automatically skip to the next track.
+ *
+ * @return <code>YES</code> if you want to override this behavior.
+ */
+- (BOOL)rdioPlayerCouldNotStreamTrack:(NSString *)trackKey;
 
 @end
 
@@ -62,6 +72,9 @@ typedef enum {
  * \code
  *  [player addObserver:self forKeyPath:@"currentTrack" options:NSKeyValueObservingOptionNew context:nil];
  * \endcode
+ *
+ * All of the properties listed above are implemented in a KVO-compliant fashion,
+ * so you should be able to observe their changes without any issues.
  */
 @interface RDPlayer : NSObject {
 @private
@@ -117,16 +130,22 @@ typedef enum {
 -(void)playSources:(NSArray *)sourceKeys;
 
 /**
- * Advances to the next track in the \ref RDPlayer::trackKeys "trackKeys" array.
- * This method only works within the array passed to the RDPlayer::playSources: method.
+ * Play the next track in the \ref RDPlayer::trackKeys "trackKeys" array.
  */
 -(void)next;
 
 /**
  * Play the previous track in the \ref RDPlayer::trackKeys "trackKeys" array.
- * This method only works within a list passed to the <code>playSources:</code> method.
  */
 -(void)previous;
+
+/**
+ * Play the track at a specific index in the \ref RDPlayer::trackKeys "trackKeys" array.
+ *
+ * @param index the index of the desired track
+ * @return NO if the index is out of range
+ */
+-(BOOL)skipToIndex:(NSUInteger)index;
 
 /**
  * Continues playing the current track
@@ -195,6 +214,11 @@ typedef enum {
  * @return NO if the queue was not updated
  */
 - (BOOL)updateQueue:(NSArray*)sourceKeys withCurrentTrackIndex:(int)index;
+
+/**
+ * Stops playback, releases resources and resets the queue.
+ */
+- (void)resetQueue;
 
 /**
  * Current playback state.
