@@ -150,7 +150,7 @@ typedef enum {
 /**
  * Continues playing the current track
  *
- * This is the same as calling RDPlayer::playAndRestart:YES
+ * This is the same as calling RDPlayer::playAndRestart:NO
  */
 - (void)play;
 
